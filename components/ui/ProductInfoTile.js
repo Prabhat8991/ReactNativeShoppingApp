@@ -1,15 +1,30 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Button, Pressable, TouchableOpacity } from 'react-native'
 import ProductImageContainer from './ProductImageContainer'
 import { Colors, TileRandomColors } from '../../colors/colors'
 import { AntDesign } from '@expo/vector-icons'
+import { useSelector } from 'react-redux'
+import { useEffect, useState } from 'react'
 
-function ProductInfoTile({ image, isFav, title, price }) {
+function ProductInfoTile({ id, image, title, price, onFavPress, onAddToCartPress }) {
+
+    const favItems = useSelector((state) => state.favItems.ids)
+
+    const [backGroundColor, setBackGroundColor] = useState(null);
+
+    function isFavProduct() {
+        return favItems.includes(id)
+    }
 
     function getRandomColor() {
         const randomNumber = Math.floor(Math.random() * 4)
         return TileRandomColors[randomNumber]
 
     }
+
+    useEffect(() => {
+        setBackGroundColor(getRandomColor())
+    }, [])
+
 
     return (
         <View style={styles.container}>
@@ -18,14 +33,21 @@ function ProductInfoTile({ image, isFav, title, price }) {
                     <Text style={styles.discountText}>30%</Text>
                 </View>
                 <View style={{ flex: 1 }}></View>
-                <AntDesign name='heart' color="gray" />
+                <AntDesign onPress={() => {
+                    onFavPress(id)
+                }} name='heart' color={isFavProduct() ? 'red' : 'gray'} />
             </View>
-            <ProductImageContainer image={image} bgColor={getRandomColor()} />
+            <ProductImageContainer image={image} bgColor={backGroundColor} />
             <Text numberOfLines={1} style={styles.title}>{title}</Text>
             <View style={styles.priceContainer}>
                 <Text style={styles.dollar}>$</Text>
                 <Text style={styles.price}>{price}</Text>
             </View>
+            <TouchableOpacity style={styles.cartContainer} onPress={() => {
+                onAddToCartPress(id)
+            }}>
+                <Text style={styles.cartButton}>Add to cart</Text>
+            </TouchableOpacity>
         </View>
     )
 }
@@ -33,6 +55,17 @@ function ProductInfoTile({ image, isFav, title, price }) {
 export default ProductInfoTile
 
 const styles = StyleSheet.create({
+    cartContainer: {
+        marginVertical: 10,
+        borderWidth: 1,
+        borderRadius: 4,
+        borderColor: Colors.primaryPurple,
+        padding: 5
+    },
+    cartButton: {
+        color: Colors.primaryPurple,
+        fontSize: 12,
+    },
     row: {
         flexDirection: 'row'
     },

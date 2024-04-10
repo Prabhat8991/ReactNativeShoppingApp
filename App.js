@@ -13,6 +13,8 @@ import ProductList from './screens/ProductList';
 import FavouriteProductsScreen from './screens/FavouriteProductsScreen';
 import { Colors } from './colors/colors';
 import CartScreen from './screens/CartScreen';
+import { Provider } from 'react-redux';
+import { store } from './store/store';
 
 export default function App() {
   const _renderIcon = (routeName, selectedTab) => {
@@ -47,44 +49,46 @@ export default function App() {
   };
 
   return (
-    <NavigationContainer>
-      <CurvedBottomBarExpo.Navigator
-        type="DOWN"
-        style={styles.bottomBar}
-        shadowStyle={styles.shawdow}
-        height={55}
-        circleWidth={50}
-        bgColor="white"
-        initialRouteName="ProductList"
-        borderTopLeftRight
-        renderCircle={({ selectedTab, navigate }) => (
-          <Animated.View style={styles.btnCircleUp}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => navigate('CartScreen')}
-            >
-              <AntDesign name={'shoppingcart'} color={Colors.primaryWhite} size={25} />
-            </TouchableOpacity>
-          </Animated.View>
-        )}
-        tabBar={renderTabBar}
-      >
-        <CurvedBottomBarExpo.Screen
-          name="Products"
-          position="LEFT"
-          component={() => <ProductList />}
-        />
-        <CurvedBottomBarExpo.Screen
-          name="FavouriteProducts"
-          component={() => <FavouriteProductsScreen />}
-          position="RIGHT"
-        />
-        <CurvedBottomBarExpo.Screen
-          name="CartScreen"
-          component={() => <CartScreen />}
-        />
-      </CurvedBottomBarExpo.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <CurvedBottomBarExpo.Navigator
+          type="DOWN"
+          style={styles.bottomBar}
+          shadowStyle={styles.shawdow}
+          height={55}
+          circleWidth={50}
+          bgColor="white"
+          initialRouteName="ProductList"
+          borderTopLeftRight
+          renderCircle={({ selectedTab, navigate }) => (
+            <Animated.View style={styles.btnCircleUp}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigate('CartScreen')}
+              >
+                <AntDesign name={'shoppingcart'} color={Colors.primaryWhite} size={25} />
+              </TouchableOpacity>
+            </Animated.View>
+          )}
+          tabBar={renderTabBar}
+        >
+          <CurvedBottomBarExpo.Screen
+            name="Products"
+            position="LEFT"
+            component={() => <ProductList />}
+          />
+          <CurvedBottomBarExpo.Screen
+            name="FavouriteProducts"
+            component={() => <FavouriteProductsScreen />}
+            position="RIGHT"
+          />
+          <CurvedBottomBarExpo.Screen
+            name="CartScreen"
+            component={() => <CartScreen />}
+          />
+        </CurvedBottomBarExpo.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
 
