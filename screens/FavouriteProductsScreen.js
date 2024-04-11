@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { addToFav, removeFromFav } from '../store/favproducts'
 import { useDispatch } from 'react-redux'
+import { addToCart, removeFromCart } from '../store/cartproducts'
 
 
 function FavouriteProductsScreen() {
@@ -13,6 +14,9 @@ function FavouriteProductsScreen() {
     const [productList, setProductList] = useState([])
 
     const favitems = useSelector((state) => state.favItems.ids)
+
+    const cartItems = useSelector((state) => state.cartItems.ids)
+
 
     console.log("Fav items" + favitems)
 
@@ -34,12 +38,24 @@ function FavouriteProductsScreen() {
     //onFavPress={addToFavProducts}
     function ProductListItem({ item }) {
         return (<View style={styles.itemContainer}>
-            <ProductInfoTile {...item} onFavPress={removeFromFav} />
+            <ProductInfoTile {...item} onFavPress={removeFromFavorite} onAddToCartPress={addProductToCart} />
         </View>)
     }
 
-    function removeFromFav(productId) {
+    function removeFromFavorite(productId) {
         dispatch(removeFromFav({
+            id: productId
+        }))
+    }
+
+    function addProductToCart(productId) {
+        if (cartItems.includes(productId)) {
+            dispatch(removeFromCart({
+                id: productId
+            }))
+            return
+        }
+        dispatch(addToCart({
             id: productId
         }))
     }

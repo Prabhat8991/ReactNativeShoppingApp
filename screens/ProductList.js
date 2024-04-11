@@ -6,12 +6,17 @@ import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { addToFav, removeFromFav } from '../store/favproducts'
 import { useDispatch } from 'react-redux'
-import { addToCart } from '../store/cartproducts'
+import { addToCart, removeFromCart } from '../store/cartproducts'
 
 
 function ProductList() {
 
     const [productList, setProductList] = useState([])
+
+    const cartItems = useSelector((state) => state.cartItems.ids)
+
+    const favItems = useSelector((state) => state.favItems.ids)
+
 
     const dispatch = useDispatch()
 
@@ -34,12 +39,24 @@ function ProductList() {
     }
 
     function addToFavProducts(productId) {
+        if (favItems.includes(productId)) {
+            dispatch(removeFromFav({
+                id: productId
+            }))
+            return
+        }
         dispatch(addToFav({
             id: productId
         }))
     }
 
     function addProductToCart(productId) {
+        if (cartItems.includes(productId)) {
+            dispatch(removeFromCart({
+                id: productId
+            }))
+            return
+        }
         dispatch(addToCart({
             id: productId
         }))

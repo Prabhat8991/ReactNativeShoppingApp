@@ -9,6 +9,9 @@ function ProductInfoTile({ id, image, title, price, onFavPress, onAddToCartPress
 
     const favItems = useSelector((state) => state.favItems.ids)
 
+    const cartItems = useSelector((state) => state.cartItems.ids)
+
+
     const [backGroundColor, setBackGroundColor] = useState(null);
 
     function isFavProduct() {
@@ -25,6 +28,10 @@ function ProductInfoTile({ id, image, title, price, onFavPress, onAddToCartPress
         setBackGroundColor(getRandomColor())
     }, [])
 
+    let cartTitle = 'Add to cart'
+    if (cartItems.includes(id)) {
+        cartTitle = 'Remove from cart'
+    }
 
     return (
         <View style={styles.container}>
@@ -43,11 +50,13 @@ function ProductInfoTile({ id, image, title, price, onFavPress, onAddToCartPress
                 <Text style={styles.dollar}>$</Text>
                 <Text style={styles.price}>{price}</Text>
             </View>
-            <TouchableOpacity style={styles.cartContainer} onPress={() => {
-                onAddToCartPress(id)
-            }}>
-                <Text style={styles.cartButton}>Add to cart</Text>
-            </TouchableOpacity>
+            <View style={styles.cartParentContainer}>
+                <TouchableOpacity style={styles.cartContainer} onPress={() => {
+                    onAddToCartPress(id)
+                }}>
+                    <Text style={styles.cartButton}>{cartTitle}</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     )
 }
@@ -55,16 +64,22 @@ function ProductInfoTile({ id, image, title, price, onFavPress, onAddToCartPress
 export default ProductInfoTile
 
 const styles = StyleSheet.create({
+    cartParentContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center'
+    },
     cartContainer: {
         marginVertical: 10,
         borderWidth: 1,
         borderRadius: 4,
         borderColor: Colors.primaryPurple,
-        padding: 5
+        padding: 5,
     },
     cartButton: {
         color: Colors.primaryPurple,
         fontSize: 12,
+        width: 110,
+        textAlign: 'center'
     },
     row: {
         flexDirection: 'row'
@@ -104,6 +119,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         margin: 30,
         padding: 20,
+        alignContent: 'center'
     },
     title: {
         marginTop: 10,
