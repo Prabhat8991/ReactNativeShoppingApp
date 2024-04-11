@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   View,
+  Text
 } from 'react-native';
 import { CurvedBottomBarExpo } from 'react-native-curved-bottom-bar';
 import { AntDesign } from '@expo/vector-icons';
@@ -13,10 +14,13 @@ import ProductList from './screens/ProductList';
 import FavouriteProductsScreen from './screens/FavouriteProductsScreen';
 import { Colors } from './colors/colors';
 import CartScreen from './screens/CartScreen';
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 import { store } from './store/store';
+import { UseSelector } from 'react-redux';
+import Badge from './components/ui/Badge';
 
 export default function App() {
+
   const _renderIcon = (routeName, selectedTab) => {
     let icon = '';
 
@@ -67,7 +71,9 @@ export default function App() {
                 onPress={() => navigate('CartScreen')}
               >
                 <AntDesign name={'shoppingcart'} color={Colors.primaryWhite} size={25} />
+
               </TouchableOpacity>
+              <Badge />
             </Animated.View>
           )}
           tabBar={renderTabBar}
@@ -93,6 +99,17 @@ export default function App() {
 }
 
 export const styles = StyleSheet.create({
+  badgeContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 28,
+    width: 28,
+    borderRadius: 14,
+    backgroundColor: 'red',
+    position: 'absolute',
+    top: -15,
+    left: 30
+  },
   container: {
     flex: 1,
     padding: 20,
