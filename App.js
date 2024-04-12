@@ -18,6 +18,10 @@ import { Provider, useSelector } from 'react-redux';
 import { store } from './store/store';
 import { UseSelector } from 'react-redux';
 import Badge from './components/ui/Badge';
+import { createStackNavigator } from '@react-navigation/stack';
+import ProductDetails from './screens/ProductDetails';
+
+const Stack = createStackNavigator()
 
 export default function App() {
 
@@ -52,6 +56,17 @@ export default function App() {
     );
   };
 
+  function MainStack() {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen name="ProductList" component={ProductList} options={{
+          headerShown: false
+        }} />
+        <Stack.Screen name="ProductDetails" component={ProductDetails} />
+      </Stack.Navigator>
+    );
+  }
+
   return (
     <Provider store={store}>
       <NavigationContainer>
@@ -62,7 +77,7 @@ export default function App() {
           height={55}
           circleWidth={50}
           bgColor="white"
-          initialRouteName="ProductList"
+          initialRouteName="ProductTab"
           borderTopLeftRight
           renderCircle={({ selectedTab, navigate }) => (
             <Animated.View style={styles.btnCircleUp}>
@@ -79,9 +94,9 @@ export default function App() {
           tabBar={renderTabBar}
         >
           <CurvedBottomBarExpo.Screen
-            name="Products"
             position="LEFT"
-            component={() => <ProductList />}
+            name="Products"
+            component={() => <MainStack />}
           />
           <CurvedBottomBarExpo.Screen
             name="FavouriteProducts"

@@ -4,12 +4,18 @@ import { Colors, TileRandomColors } from '../../colors/colors'
 import { AntDesign } from '@expo/vector-icons'
 import { useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
+import OutlinedButton from './OutlinedButton'
+import Star from './Star'
+import Rating from './RatingComponent'
+import { useNavigation } from '@react-navigation/native'
 
-function ProductInfoTile({ id, image, title, price, onFavPress, onAddToCartPress }) {
+function ProductInfoTile({ id, image, title, price, onFavPress, onAddToCartPress, rating }) {
 
     const favItems = useSelector((state) => state.favItems.ids)
 
     const cartItems = useSelector((state) => state.cartItems.ids)
+
+    const navigation = useNavigation()
 
 
     const [backGroundColor, setBackGroundColor] = useState(null);
@@ -34,30 +40,31 @@ function ProductInfoTile({ id, image, title, price, onFavPress, onAddToCartPress
     }
 
     return (
-        <View style={styles.container}>
-            <View style={styles.headerContainer}>
-                <View style={styles.discountContainer}>
-                    <Text style={styles.discountText}>30%</Text>
+        <Pressable onPress={() => {
+            navigation.navigate('ProductDetails')
+        }}>
+            <View style={styles.container}>
+                <View style={styles.headerContainer}>
+                    <View style={styles.discountContainer}>
+                        <Text style={styles.discountText}>30%</Text>
+                    </View>
+                    <View style={{ flex: 1 }}></View>
+                    <AntDesign onPress={() => {
+                        onFavPress(id)
+                    }} name='heart' color={isFavProduct() ? 'red' : 'gray'} />
                 </View>
-                <View style={{ flex: 1 }}></View>
-                <AntDesign onPress={() => {
-                    onFavPress(id)
-                }} name='heart' color={isFavProduct() ? 'red' : 'gray'} />
-            </View>
-            <ProductImageContainer image={image} bgColor={backGroundColor} />
-            <Text numberOfLines={1} style={styles.title}>{title}</Text>
-            <View style={styles.priceContainer}>
-                <Text style={styles.dollar}>$</Text>
-                <Text style={styles.price}>{price}</Text>
-            </View>
-            <View style={styles.cartParentContainer}>
-                <TouchableOpacity style={styles.cartContainer} onPress={() => {
+                <ProductImageContainer image={image} bgColor={backGroundColor} />
+                <Text numberOfLines={1} style={styles.title}>{title}</Text>
+                <View style={styles.priceContainer}>
+                    <Text style={styles.dollar}>$</Text>
+                    <Text style={styles.price}>{price}</Text>
+                </View>
+                <OutlinedButton title={cartTitle} onAddToCartPress={() => {
                     onAddToCartPress(id)
-                }}>
-                    <Text style={styles.cartButton}>{cartTitle}</Text>
-                </TouchableOpacity>
+                }} />
+                <Rating rating={rating.rate} />
             </View>
-        </View>
+        </Pressable>
     )
 }
 
