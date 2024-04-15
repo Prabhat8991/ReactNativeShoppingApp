@@ -56,58 +56,60 @@ export default function App() {
     );
   };
 
-  function MainStack() {
+
+  function BottomBar() {
     return (
-      <Stack.Navigator>
-        <Stack.Screen name="ProductList" component={ProductList} options={{
-          headerShown: false
-        }} />
-        <Stack.Screen name="ProductDetails" component={ProductDetails} />
-      </Stack.Navigator>
-    );
+      <CurvedBottomBarExpo.Navigator
+        type="DOWN"
+        style={styles.bottomBar}
+        shadowStyle={styles.shawdow}
+        height={55}
+        circleWidth={50}
+        bgColor="white"
+        initialRouteName="ProductTab"
+        borderTopLeftRight
+        renderCircle={({ selectedTab, navigate }) => (
+          <Animated.View style={styles.btnCircleUp}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => navigate('CartScreen')}
+            >
+              <AntDesign name={'shoppingcart'} color={Colors.primaryWhite} size={25} />
+
+            </TouchableOpacity>
+            <Badge />
+          </Animated.View>
+        )}
+        tabBar={renderTabBar}
+      >
+        <CurvedBottomBarExpo.Screen
+          position="LEFT"
+          name="Products"
+          component={() => <ProductList />}
+        />
+        <CurvedBottomBarExpo.Screen
+          name="FavouriteProducts"
+          component={() => <FavouriteProductsScreen />}
+          position="RIGHT"
+        />
+        <CurvedBottomBarExpo.Screen
+          name="CartScreen"
+          component={() => <CartScreen />}
+        />
+      </CurvedBottomBarExpo.Navigator>
+    )
   }
+
 
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <CurvedBottomBarExpo.Navigator
-          type="DOWN"
-          style={styles.bottomBar}
-          shadowStyle={styles.shawdow}
-          height={55}
-          circleWidth={50}
-          bgColor="white"
-          initialRouteName="ProductTab"
-          borderTopLeftRight
-          renderCircle={({ selectedTab, navigate }) => (
-            <Animated.View style={styles.btnCircleUp}>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => navigate('CartScreen')}
-              >
-                <AntDesign name={'shoppingcart'} color={Colors.primaryWhite} size={25} />
-
-              </TouchableOpacity>
-              <Badge />
-            </Animated.View>
-          )}
-          tabBar={renderTabBar}
-        >
-          <CurvedBottomBarExpo.Screen
-            position="LEFT"
-            name="Products"
-            component={() => <MainStack />}
-          />
-          <CurvedBottomBarExpo.Screen
-            name="FavouriteProducts"
-            component={() => <FavouriteProductsScreen />}
-            position="RIGHT"
-          />
-          <CurvedBottomBarExpo.Screen
-            name="CartScreen"
-            component={() => <CartScreen />}
-          />
-        </CurvedBottomBarExpo.Navigator>
+        <Stack.Navigator>
+          <Stack.Screen name='ProductsTab' component={BottomBar} options={{
+            headerShown: false
+          }} />
+          <Stack.Screen name="ProductDetails" component={ProductDetails} />
+        </Stack.Navigator>
       </NavigationContainer>
     </Provider>
   );

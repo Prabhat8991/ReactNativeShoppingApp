@@ -54,7 +54,7 @@ function ProductInfoTile({ id, image, title, price, onFavPress, onAddToCartPress
                     }} name='heart' color={isFavProduct() ? 'red' : 'gray'} />
                 </View>
                 <ProductImageContainer image={image} bgColor={backGroundColor} />
-                <Text numberOfLines={1} style={styles.title}>{title}</Text>
+                <Text numberOfLines={2} style={styles.title}>{title}</Text>
                 <View style={styles.priceContainer}>
                     <Text style={styles.dollar}>$</Text>
                     <Text style={styles.price}>{price}</Text>
@@ -131,7 +131,8 @@ const styles = StyleSheet.create({
     title: {
         marginTop: 10,
         fontSize: 10,
-        width: 50
+        width: 70,
+        textAlign: 'center'
     },
     price: {
         fontSize: 20,
