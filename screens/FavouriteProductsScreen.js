@@ -15,10 +15,15 @@ function FavouriteProductsScreen() {
 
     const favitems = useSelector((state) => state.favItems.ids)
 
-    const cartItems = useSelector((state) => state.cartItems.ids)
+    const cartItems = useSelector((state) => state.cartItems.items)
 
 
     console.log("Fav items" + favitems)
+
+    const isIdInCart = (idToCheck) => {
+        // Check if the ID exists in the items array
+        return cartItems.hasOwnProperty(idToCheck);
+    };
 
 
     const dispatch = useDispatch()
@@ -49,14 +54,16 @@ function FavouriteProductsScreen() {
     }
 
     function addProductToCart(productId) {
-        if (cartItems.includes(productId)) {
+        if (isIdInCart(productId)) {
             dispatch(removeFromCart({
-                id: productId
+                id: productId,
+                quantity: 1
             }))
             return
         }
         dispatch(addToCart({
-            id: productId
+            id: productId,
+            quantity: 1
         }))
     }
 

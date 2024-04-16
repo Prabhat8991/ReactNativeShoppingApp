@@ -4,12 +4,18 @@ import { Colors } from '../../colors/colors'
 
 function Badge() {
 
-    const cartItems = useSelector((state) => state.cartItems.ids)
+    const cartItems = useSelector((state) => state.cartItems.items)
 
-    console.log("Cart items: " + cartItems.length)
+    let totalQuantity = 0;
+
+    Object.keys(cartItems).forEach((key) => {
+        const item = cartItems[key];
+        totalQuantity += item.quantity;
+    });
+
 
     return (<View style={styles.badgeContainer}>
-        <Text style={styles.badgeText}>{cartItems.length}</Text>
+        <Text style={styles.badgeText}>{totalQuantity}</Text>
     </View>)
 }
 

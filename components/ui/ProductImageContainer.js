@@ -1,11 +1,37 @@
-import { View, StyleSheet, TouchableOpacity, Image } from 'react-native'
+import { View, StyleSheet, Image } from 'react-native'
+import { TileRandomColors } from '../../colors/colors'
+import { useEffect, useState } from 'react'
 
-function ProductImageContainer({ bgColor, image }) {
+export const PRODUCT_IMAGE_TYPE = ['CART_ITEM', 'PRODUCT_LIST']
+
+
+let BASE_SIZE = 100
+let IMAGE_CONTAINER_SIZE = 60
+let IMAGE_CONTAINER_OFFSET = 35
+
+function ProductImageContainer({ image, productImageType, style }) {
+
+    const [backGroundColor, setBackGroundColor] = useState(null);
+
+    function getRandomColor() {
+        const randomNumber = Math.floor(Math.random() * 4)
+        return TileRandomColors[randomNumber]
+
+    }
+    useEffect(() => {
+        setBackGroundColor(getRandomColor())
+    }, [])
+
+    if (productImageType === 'CART_ITEM') {
+        BASE_SIZE = 70
+        IMAGE_CONTAINER_SIZE = 40
+        IMAGE_CONTAINER_OFFSET = 25
+    }
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, style]}>
             <View style={styles.circlesContainer}>
-                <View style={[styles.circle_1, { backgroundColor: bgColor }]} />
-                <View style={[styles.circle_2, { backgroundColor: bgColor }]} />
+                <View style={[styles.circle_1, { backgroundColor: backGroundColor }]} />
+                <View style={[styles.circle_2, { backgroundColor: backGroundColor }]} />
                 <View style={styles.imageContainer}>
                     <Image style={styles.image}
                         source={{ uri: image }}
@@ -16,8 +42,6 @@ function ProductImageContainer({ bgColor, image }) {
         </View>
     )
 }
-
-const BASE_SIZE = 100
 
 const styles = StyleSheet.create({
     container: {
@@ -40,10 +64,10 @@ const styles = StyleSheet.create({
     },
     imageContainer: {
         position: 'absolute',
-        width: 60, // Increase size to extend beyond circles
-        height: 60, // Increase size to extend beyond circles
-        top: 35,
-        left: 35
+        width: IMAGE_CONTAINER_SIZE, // Increase size to extend beyond circles
+        height: IMAGE_CONTAINER_SIZE, // Increase size to extend beyond circles
+        top: IMAGE_CONTAINER_OFFSET,
+        left: IMAGE_CONTAINER_OFFSET
     },
     circle_1: {
         position: 'absolute',

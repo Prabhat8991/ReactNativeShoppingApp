@@ -13,29 +13,24 @@ function ProductInfoTile({ id, image, title, price, onFavPress, onAddToCartPress
 
     const favItems = useSelector((state) => state.favItems.ids)
 
-    const cartItems = useSelector((state) => state.cartItems.ids)
+    const cartItems = useSelector((state) => state.cartItems.items)
+
+    console.log('Cart items ...' + cartItems)
 
     const navigation = useNavigation()
-
-
-    const [backGroundColor, setBackGroundColor] = useState(null);
 
     function isFavProduct() {
         return favItems.includes(id)
     }
 
-    function getRandomColor() {
-        const randomNumber = Math.floor(Math.random() * 4)
-        return TileRandomColors[randomNumber]
+    const isIdInCart = (idToCheck) => {
+        // Check if the ID exists in the items array
+        return cartItems.hasOwnProperty(idToCheck);
+    };
 
-    }
-
-    useEffect(() => {
-        setBackGroundColor(getRandomColor())
-    }, [])
 
     let cartTitle = 'Add to cart'
-    if (cartItems.includes(id)) {
+    if (isIdInCart(id)) {
         cartTitle = 'Remove from cart'
     }
 
@@ -53,7 +48,7 @@ function ProductInfoTile({ id, image, title, price, onFavPress, onAddToCartPress
                         onFavPress(id)
                     }} name='heart' color={isFavProduct() ? 'red' : 'gray'} />
                 </View>
-                <ProductImageContainer image={image} bgColor={backGroundColor} />
+                <ProductImageContainer image={image} />
                 <Text numberOfLines={2} style={styles.title}>{title}</Text>
                 <View style={styles.priceContainer}>
                     <Text style={styles.dollar}>$</Text>
@@ -126,7 +121,14 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         margin: 30,
         padding: 20,
-        alignContent: 'center'
+        alignContent: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
     },
     title: {
         marginTop: 10,

@@ -6,14 +6,14 @@ import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { addToFav, removeFromFav } from '../store/favproducts'
 import { useDispatch } from 'react-redux'
-import { addToCart, removeFromCart } from '../store/cartproducts'
-
+import { addToCart, removeFromCart, removeAllFromCart } from '../store/cartproducts'
+import { addAllItems } from '../store/allproducts'
 
 function ProductList() {
 
     const [productList, setProductList] = useState([])
 
-    const cartItems = useSelector((state) => state.cartItems.ids)
+    const cartItems = useSelector((state) => state.cartItems.items)
 
     const favItems = useSelector((state) => state.favItems.ids)
 
@@ -27,6 +27,9 @@ function ProductList() {
             console.log("response...." + response)
             console.log("response...." + response)
             setProductList(response)
+            dispatch(addAllItems({
+                items: response
+            }))
         }
         getProductList()
     }, [])
@@ -50,15 +53,21 @@ function ProductList() {
         }))
     }
 
+    const isIdInCart = (idToCheck) => {
+        // Check if the ID exists in the items array
+        return cartItems.hasOwnProperty(idToCheck);
+    };
+
     function addProductToCart(productId) {
-        if (cartItems.includes(productId)) {
-            dispatch(removeFromCart({
+        if (isIdInCart(productId)) {
+            dispatch(removeAllFromCart({
                 id: productId
             }))
             return
         }
         dispatch(addToCart({
-            id: productId
+            id: productId,
+            quantity: 1
         }))
     }
 
