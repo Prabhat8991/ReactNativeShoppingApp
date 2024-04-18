@@ -123,6 +123,7 @@ const styles = StyleSheet.create({
         padding: 20,
         alignContent: 'center',
         shadowColor: '#000',
+        elevation: 5,
         shadowOffset: {
             width: 0,
             height: 2,

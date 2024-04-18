@@ -6,15 +6,7 @@ const ADD_REMOVE = {
 }
 
 function AddRemoveButton({ onItemAdded, onItemRemoved, buttonType, color }) {
-    let buttonSign
-    let action
-    if (buttonType == ADD_REMOVE.ADD) {
-        buttonSign = '+'
-        action = onItemAdded
-    } else {
-        buttonSign = '-'
-        action = onItemRemoved
-    }
+    let { action, buttonSign } = getAddRemoveButtonSign(buttonType, onItemAdded, onItemRemoved)
     return (
         <TouchableHighlight onPress={() => action()} style={[styles.buttonContainer, {
             backgroundColor: color
@@ -34,6 +26,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'red',
+        elevation: 5,
         shadowColor: '#000',
         shadowOffset: {
             width: 0,
@@ -43,3 +36,16 @@ const styles = StyleSheet.create({
         shadowRadius: 2,
     },
 })
+
+export function getAddRemoveButtonSign(buttonType, onItemAdded, onItemRemoved) {
+    let buttonSign
+    let action
+    if (buttonType == ADD_REMOVE.ADD) {
+        buttonSign = '+'
+        action = onItemAdded
+    } else {
+        buttonSign = '-'
+        action = onItemRemoved
+    }
+    return { action, buttonSign }
+}
