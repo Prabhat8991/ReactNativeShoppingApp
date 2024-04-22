@@ -1,6 +1,6 @@
 import { View, StyleSheet, Image } from 'react-native'
 import { TileRandomColors } from '../../colors/colors'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 
 export const PRODUCT_IMAGE_TYPE = {
     CART_ITEM: 'cart_item',
@@ -52,7 +52,6 @@ function ProductImageContainer({ image, productImageType, style }) {
 
     const { baseSize, imageContainerSize, imageContainerOffset } = imageState;
 
-
     return (
         <View style={[styles.container, { width: baseSize, height: baseSize }, style]}>
             <View style={styles.circlesContainer}>
@@ -103,6 +102,5 @@ const styles = StyleSheet.create({
         borderColor: 'white',
     },
 });
-
 
 export default ProductImageContainer

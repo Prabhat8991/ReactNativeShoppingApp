@@ -21,7 +21,7 @@ const ProductDetails = ({ route }) => {
 
     const item = allItems.find(item => item.id === productId)
 
-    const { title, description, image } = item
+    const { title, description, image, price } = item
 
     isIdInCart = (idToCheck) => {
         // Check if the ID exists in the items array
@@ -60,7 +60,7 @@ const ProductDetails = ({ route }) => {
 
             {/* View 2 */}
             <View style={[styles.overlay, styles.container2]}>
-                <PriceContainer price='269.00' textStyle={{
+                <PriceContainer price={price} textStyle={{
                     fontSize: 30,
                 }} dollarStyle={{
                     fontSize: 15,
