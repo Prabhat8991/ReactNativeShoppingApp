@@ -1,9 +1,9 @@
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native'
 import { Colors } from '../../colors/colors'
 
-function OutlinedButton({ title, onAddToCartPress }) {
+function OutlinedButton({ title, onAddToCartPress, style }) {
     return (
-        <View style={styles.cartParentContainer}>
+        <View style={[styles.cartParentContainer, style]}>
             <TouchableOpacity style={styles.cartContainer} onPress={() => {
                 onAddToCartPress()
             }}>
@@ -18,7 +18,9 @@ export default OutlinedButton
 const styles = StyleSheet.create({
     cartParentContainer: {
         flexDirection: 'row',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        width: 80,
+        height: 50
     },
     cartContainer: {
         marginVertical: 10,

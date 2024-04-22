@@ -2,14 +2,21 @@ import { View, StyleSheet, Image } from 'react-native'
 import { TileRandomColors } from '../../colors/colors'
 import { useEffect, useState } from 'react'
 
-export const PRODUCT_IMAGE_TYPE = ['CART_ITEM', 'PRODUCT_LIST']
-
-
-let BASE_SIZE = 100
-let IMAGE_CONTAINER_SIZE = 60
-let IMAGE_CONTAINER_OFFSET = 35
+export const PRODUCT_IMAGE_TYPE = {
+    CART_ITEM: 'cart_item',
+    PRODUCT_LIST_ITEM: 'product_list_item',
+    PRODUCT_DETAIL_ITEM: 'product_detail_item'
+}
 
 function ProductImageContainer({ image, productImageType, style }) {
+
+    const [imageState, setImageState] = useState({
+        baseSize: 100,
+        imageContainerSize: 60,
+        imageContainerOffset: 35,
+        backGroundColor: null
+    });
+
 
     const [backGroundColor, setBackGroundColor] = useState(null);
 
@@ -19,20 +26,39 @@ function ProductImageContainer({ image, productImageType, style }) {
 
     }
     useEffect(() => {
+        let newSize = 100;
+        let newImageContainerSize = 60;
+        let newImageContainerOffset = 35;
+
+        if (productImageType === PRODUCT_IMAGE_TYPE.CART_ITEM) {
+            newSize = 70;
+            newImageContainerSize = 40;
+            newImageContainerOffset = 25;
+        } else if (productImageType === PRODUCT_IMAGE_TYPE.PRODUCT_DETAIL_ITEM) {
+            newSize = 200;
+            newImageContainerSize = 100;
+            newImageContainerOffset = 50;
+        }
+
+        setImageState({
+            ...imageState,
+            baseSize: newSize,
+            imageContainerSize: newImageContainerSize,
+            imageContainerOffset: newImageContainerOffset,
+        });
+
         setBackGroundColor(getRandomColor())
     }, [])
 
-    if (productImageType === 'CART_ITEM') {
-        BASE_SIZE = 70
-        IMAGE_CONTAINER_SIZE = 40
-        IMAGE_CONTAINER_OFFSET = 25
-    }
+    const { baseSize, imageContainerSize, imageContainerOffset } = imageState;
+
+
     return (
-        <View style={[styles.container, style]}>
+        <View style={[styles.container, { width: baseSize, height: baseSize }, style]}>
             <View style={styles.circlesContainer}>
-                <View style={[styles.circle_1, { backgroundColor: backGroundColor }]} />
-                <View style={[styles.circle_2, { backgroundColor: backGroundColor }]} />
-                <View style={styles.imageContainer}>
+                <View style={[styles.circle_1, { backgroundColor: backGroundColor, borderRadius: baseSize / 2 }]} />
+                <View style={[styles.circle_2, { backgroundColor: backGroundColor, borderRadius: (baseSize * 0.9) / 2, }]} />
+                <View style={[styles.imageContainer, { width: imageContainerSize, height: imageContainerSize, top: imageContainerOffset, left: imageContainerOffset }]}>
                     <Image style={styles.image}
                         source={{ uri: image }}
                         resizeMode="cover"
@@ -43,12 +69,11 @@ function ProductImageContainer({ image, productImageType, style }) {
     )
 }
 
+
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
         justifyContent: 'center',
-        width: BASE_SIZE,
-        height: BASE_SIZE,
     },
     circlesContainer: {
         position: 'relative',
@@ -59,29 +84,23 @@ const styles = StyleSheet.create({
     },
     image: {
         position: 'relative',
-        width: '100%', // Increase size to extend beyond circles
-        height: '100%', // Increase size to extend beyond circles
+        width: '100%',
+        height: '100%',
     },
     imageContainer: {
         position: 'absolute',
-        width: IMAGE_CONTAINER_SIZE, // Increase size to extend beyond circles
-        height: IMAGE_CONTAINER_SIZE, // Increase size to extend beyond circles
-        top: IMAGE_CONTAINER_OFFSET,
-        left: IMAGE_CONTAINER_OFFSET
     },
     circle_1: {
         position: 'absolute',
         width: '100%',
         height: '100%',
-        borderRadius: BASE_SIZE / 2,
     },
     circle_2: {
         position: 'absolute',
         width: '90%',
         height: '90%',
-        borderRadius: (BASE_SIZE * 0.9) / 2,
         borderWidth: 2,
-        borderColor: 'white'
+        borderColor: 'white',
     },
 });
 

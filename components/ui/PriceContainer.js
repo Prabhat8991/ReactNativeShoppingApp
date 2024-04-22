@@ -1,11 +1,11 @@
 import { View, Text, StyleSheet } from "react-native"
 import { Colors } from "../../colors/colors"
 
-function PriceContainer({ price }) {
+function PriceContainer({ price, textStyle, dollarStyle }) {
     return (
         <View style={styles.priceContainer}>
-            <Text style={styles.dollar}>$</Text>
-            <Text style={styles.price}>{price}</Text>
+            <Text style={[styles.dollar, dollarStyle]}>$</Text>
+            <Text style={[styles.price, textStyle]}>{price}</Text>
         </View>
     )
 }

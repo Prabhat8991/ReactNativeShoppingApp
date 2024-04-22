@@ -23,7 +23,7 @@ function ProductInfoTile({ id, image, title, price, onFavPress, onAddToCartPress
         return favItems.includes(id)
     }
 
-    const isIdInCart = (idToCheck) => {
+    isIdInCart = (idToCheck) => {
         // Check if the ID exists in the items array
         return cartItems.hasOwnProperty(idToCheck);
     };
@@ -36,7 +36,9 @@ function ProductInfoTile({ id, image, title, price, onFavPress, onAddToCartPress
 
     return (
         <Pressable onPress={() => {
-            navigation.navigate('ProductDetails')
+            navigation.navigate('ProductDetails', {
+                productId: id
+            })
         }}>
             <View style={styles.container}>
                 <View style={styles.headerContainer}>

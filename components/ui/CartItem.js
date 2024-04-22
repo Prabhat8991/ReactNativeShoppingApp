@@ -1,5 +1,5 @@
 import { View, StyleSheet, Text } from "react-native"
-import ProductImageContainer from "./ProductImageContainer"
+import ProductImageContainer, { PRODUCT_IMAGE_TYPE } from "./ProductImageContainer"
 import PriceContainer from "./PriceContainer"
 import AddRemoveButton from "./AddRemoveButton"
 import { Colors } from "../../colors/colors"
@@ -7,7 +7,7 @@ import { Colors } from "../../colors/colors"
 function CartItem({ image, price, title, quantity, onItemAdded, onItemRemoved }) {
     return (
         <View style={styles.cartItemContainer}>
-            <ProductImageContainer image={image} productImageType='CART_ITEM' style={{
+            <ProductImageContainer image={image} productImageType={PRODUCT_IMAGE_TYPE.CART_ITEM} style={{
                 marginHorizontal: 20
             }} />
             <View style={styles.cartItemDescContainer}>

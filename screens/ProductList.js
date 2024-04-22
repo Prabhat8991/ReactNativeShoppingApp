@@ -17,15 +17,12 @@ function ProductList() {
 
     const favItems = useSelector((state) => state.favItems.ids)
 
-
     const dispatch = useDispatch()
 
     useEffect(() => {
         let response = null;
         async function getProductList() {
             response = await getProducts()
-            console.log("response...." + response)
-            console.log("response...." + response)
             setProductList(response)
             dispatch(addAllItems({
                 items: response

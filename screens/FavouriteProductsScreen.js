@@ -32,9 +32,7 @@ function FavouriteProductsScreen() {
         let response = null;
         async function getProductList() {
             response = await getProducts()
-            console.log("Fav response...." + response)
             response = response.filter((item) => favitems.includes(item.id))
-            console.log("Fav response...." + response)
             setProductList(response)
         }
         getProductList()
