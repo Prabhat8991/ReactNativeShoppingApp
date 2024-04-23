@@ -50,7 +50,7 @@ function ProductInfoTile({ id, image, title, price, onFavPress, onAddToCartPress
                         onFavPress(id)
                     }} name='heart' color={isFavProduct() ? 'red' : 'gray'} />
                 </View>
-                <ProductImageContainer image={image} />
+                <ProductImageContainer image={image} id={id} />
                 <Text numberOfLines={2} style={styles.title}>{title}</Text>
                 <View style={styles.priceContainer}>
                     <Text style={styles.dollar}>$</Text>

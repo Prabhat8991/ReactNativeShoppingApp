@@ -16,6 +16,7 @@
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/stack": "^6.3.29",
     "@reduxjs/toolkit": "^2.2.3",
+    "@types/react": "~18.2.45",
     "axios": "^1.6.8",
     "expo": "~50.0.14",
     "expo-status-bar": "~1.11.1",
@@ -30,7 +31,8 @@
     "react-native-screens": "~3.29.0",
     "react-native-svg": "^15.1.0",
     "react-redux": "^9.1.0",
-    "redux": "^5.0.1"
+    "redux": "^5.0.1",
+    "typescript": "^5.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

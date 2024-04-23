@@ -8,7 +8,11 @@ export const PRODUCT_IMAGE_TYPE = {
     PRODUCT_DETAIL_ITEM: 'product_detail_item'
 }
 
-function ProductImageContainer({ image, productImageType, style }) {
+function ProductImageContainer({ id, image, productImageType, style }) {
+
+    console.log('Item id ...' + id)
+
+    console.log('Bg color..' + TileRandomColors[id % TileRandomColors.length])
 
     const [imageState, setImageState] = useState({
         baseSize: 100,
@@ -21,10 +25,9 @@ function ProductImageContainer({ image, productImageType, style }) {
     const [backGroundColor, setBackGroundColor] = useState(null);
 
     function getRandomColor() {
-        const randomNumber = Math.floor(Math.random() * 4)
-        return TileRandomColors[randomNumber]
-
+        return TileRandomColors[id % TileRandomColors.length]
     }
+
     useEffect(() => {
         let newSize = 100;
         let newImageContainerSize = 60;

@@ -51,7 +51,7 @@ const ProductDetails = ({ route }) => {
     return (
         <View style={styles.container}>
 
-            <ProductImageContainer image={image} productImageType={PRODUCT_IMAGE_TYPE.PRODUCT_DETAIL_ITEM} style={styles.image} />
+            <ProductImageContainer id={productId} image={image} productImageType={PRODUCT_IMAGE_TYPE.PRODUCT_DETAIL_ITEM} style={styles.image} />
 
             <View style={[styles.overlay, styles.container1]}>
                 <Text style={styles.title}>{title}</Text>
