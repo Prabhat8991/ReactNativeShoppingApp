@@ -8,6 +8,7 @@ import { addToFav, removeFromFav } from '../store/favproducts'
 import { useDispatch } from 'react-redux'
 import { addToCart, removeFromCart, removeAllFromCart } from '../store/cartproducts'
 import { addAllItems } from '../store/allproducts'
+import { insertOrUpdateProduct } from '../utils/database'
 
 function ProductList() {
 
@@ -27,6 +28,9 @@ function ProductList() {
             dispatch(addAllItems({
                 items: response
             }))
+            response.map(product => {
+                insertOrUpdateProduct({ ...product, isFav: false, isAddedToCart: false })
+            });
         }
         getProductList()
     }, [])

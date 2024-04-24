@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Alert,
   Animated,
@@ -20,10 +20,26 @@ import { UseSelector } from 'react-redux';
 import Badge from './components/ui/Badge';
 import { createStackNavigator } from '@react-navigation/stack';
 import ProductDetails from './screens/ProductDetails';
+import { init } from './utils/database';
+import AppLoading from 'expo-app-loading';
 
 const Stack = createStackNavigator()
 
 export default function App() {
+
+  const [dbinitialized, setDbinitialized] = useState(false)
+
+  useEffect(() => {
+    init().then(() => {
+      setDbinitialized(true)
+    }).catch((error) => {
+      console.log("DB initialization error..." + error)
+    })
+  }, [])
+
+  if (!dbinitialized) {
+    return <AppLoading />
+  }
 
   const _renderIcon = (routeName, selectedTab) => {
     let icon = '';

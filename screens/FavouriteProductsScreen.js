@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux'
 import { addToFav, removeFromFav } from '../store/favproducts'
 import { useDispatch } from 'react-redux'
 import { addToCart, removeFromCart } from '../store/cartproducts'
+import { insertOrUpdateProduct, updateProductIsAddedToCart, updateProductIsFav } from '../utils/database'
 
 
 function FavouriteProductsScreen() {
