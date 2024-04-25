@@ -21,7 +21,6 @@ import Badge from './components/ui/Badge';
 import { createStackNavigator } from '@react-navigation/stack';
 import ProductDetails from './screens/ProductDetails';
 import { init } from './utils/database';
-import AppLoading from 'expo-app-loading';
 
 const Stack = createStackNavigator()
 
@@ -36,10 +35,6 @@ export default function App() {
       console.log("DB initialization error..." + error)
     })
   }, [])
-
-  if (!dbinitialized) {
-    return <AppLoading />
-  }
 
   const _renderIcon = (routeName, selectedTab) => {
     let icon = '';

@@ -37,8 +37,12 @@ function ProductList() {
 
     //onFavPress={addToFavProducts}
     function ProductListItem({ item }) {
+        const newItem = {
+            ...item,
+            rate: item.rating ? item.rating.rate : item.rate
+        };
         return (<View style={styles.itemContainer}>
-            <ProductInfoTile {...item} onFavPress={addToFavProducts} onAddToCartPress={addProductToCart} />
+            <ProductInfoTile {...newItem} onFavPress={addToFavProducts} onAddToCartPress={addProductToCart} />
         </View>)
     }
 

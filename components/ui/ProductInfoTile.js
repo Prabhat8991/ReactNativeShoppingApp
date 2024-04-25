@@ -9,7 +9,7 @@ import Star from './Star'
 import Rating from './RatingComponent'
 import { useNavigation } from '@react-navigation/native'
 
-function ProductInfoTile({ id, image, title, price, onFavPress, onAddToCartPress, rating }) {
+function ProductInfoTile({ id, image, title, price, onFavPress, onAddToCartPress, rate }) {
 
     const favItems = useSelector((state) => state.favItems.ids)
 
@@ -59,7 +59,7 @@ function ProductInfoTile({ id, image, title, price, onFavPress, onAddToCartPress
                 <OutlinedButton title={cartTitle} onAddToCartPress={() => {
                     onAddToCartPress(id)
                 }} />
-                <Rating rating={rating.rate} />
+                <Rating rating={rate} />
             </View>
         </Pressable>
     )

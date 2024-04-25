@@ -11,7 +11,7 @@ export function init() {
         price REAL NOT NULL,
         description TEXT NOT NULL,
         image TEXT NOT NULL,
-        rating REAL NOT NULL,
+        rate REAL NOT NULL,
         isFav BOOLEAN NOT NULL DEFAULT 0,
         isAddedToCart BOOLEAN NOT NULL DEFAULT 0
       )`, [], () => { resolve() }, (_, error) => { reject(error) })
@@ -31,13 +31,13 @@ export function insertOrUpdateProduct(product) {
                     if (result.rows.length > 0) {
                         // Product already exists, perform update
                         txn.executeSql(
-                            `UPDATE products SET title = ?, price = ?, description = ?, image = ?, rating = ?, isFav = ?, isAddedToCart = ? WHERE id = ?`,
+                            `UPDATE products SET title = ?, price = ?, description = ?, image = ?, rate = ?, isFav = ?, isAddedToCart = ? WHERE id = ?`,
                             [
                                 product.title,
                                 product.price,
                                 product.description,
                                 product.image,
-                                product.rating,
+                                product.rating.rate,
                                 product.isFav,
                                 product.isAddedToCart,
                                 product.id
@@ -54,14 +54,14 @@ export function insertOrUpdateProduct(product) {
                     } else {
                         // Product doesn't exist, perform insert
                         txn.executeSql(
-                            `INSERT INTO products (id, title, price, description, image, rating, isFav, isAddedToCart) VALUES (?,?,?,?,?,?,?,?)`,
+                            `INSERT INTO products (id, title, price, description, image, rate, isFav, isAddedToCart) VALUES (?,?,?,?,?,?,?,?)`,
                             [
                                 product.id,
                                 product.title,
                                 product.price,
                                 product.description,
                                 product.image,
-                                product.rating,
+                                product.rating.rate,
                                 product.isFav,
                                 product.isAddedToCart
                             ],
