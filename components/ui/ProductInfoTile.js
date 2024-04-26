@@ -8,8 +8,13 @@ import OutlinedButton from './OutlinedButton'
 import Star from './Star'
 import Rating from './RatingComponent'
 import { useNavigation } from '@react-navigation/native'
+import { useContext } from 'react'
+import { ThemeContext } from '../../theme/ThemeContext'
+import { darkTheme, lightTheme } from '../../theme/theme'
 
 function ProductInfoTile({ id, image, title, price, onFavPress, onAddToCartPress, rate }) {
+
+    const { appTheme, toggleTheme } = useContext(ThemeContext);
 
     const favItems = useSelector((state) => state.favItems.ids)
 
@@ -40,10 +45,10 @@ function ProductInfoTile({ id, image, title, price, onFavPress, onAddToCartPress
                 productId: id
             })
         }}>
-            <View style={styles.container}>
+            <View style={[styles.container, { backgroundColor: appTheme === darkTheme ? '#A9A9A9' : Colors.primaryWhite }]}>
                 <View style={styles.headerContainer}>
                     <View style={styles.discountContainer}>
-                        <Text style={styles.discountText}>30%</Text>
+                        <Text style={[styles.discountText, { color: appTheme.textColor }]}>30%</Text>
                     </View>
                     <View style={{ flex: 1 }}></View>
                     <AntDesign onPress={() => {
@@ -51,7 +56,7 @@ function ProductInfoTile({ id, image, title, price, onFavPress, onAddToCartPress
                     }} name='heart' color={isFavProduct() ? 'red' : 'gray'} />
                 </View>
                 <ProductImageContainer image={image} id={id} />
-                <Text numberOfLines={2} style={styles.title}>{title}</Text>
+                <Text numberOfLines={2} style={[styles.title, { color: appTheme.textColor }]}>{title}</Text>
                 <View style={styles.priceContainer}>
                     <Text style={styles.dollar}>$</Text>
                     <Text style={styles.price}>{price}</Text>
@@ -137,7 +142,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         fontSize: 10,
         width: 70,
-        textAlign: 'center'
+        textAlign: 'center',
     },
     price: {
         fontSize: 20,

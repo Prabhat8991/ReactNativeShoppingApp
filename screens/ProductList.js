@@ -1,4 +1,4 @@
-import { View, Text, FlatList, StyleSheet } from 'react-native'
+import { View, Text, FlatList, StyleSheet, Pressable } from 'react-native'
 import ProductImageContainer from '../components/ui/ProductImageContainer'
 import ProductInfoTile from '../components/ui/ProductInfoTile'
 import { getProducts } from '../utils/NetworkUtil'
@@ -9,6 +9,13 @@ import { useDispatch } from 'react-redux'
 import { addToCart, removeFromCart, removeAllFromCart } from '../store/cartproducts'
 import { addAllItems } from '../store/allproducts'
 import { insertOrUpdateProduct } from '../utils/database'
+import { useContext } from 'react'
+import { ThemeContext } from '../theme/ThemeContext'
+import { MaterialIcons } from '@expo/vector-icons'
+import { useLayoutEffect } from 'react'
+import { useNavigation } from '@react-navigation/native'
+import { lightTheme } from '../theme/theme'
+import { Colors } from '../colors/colors'
 
 function ProductList() {
 
@@ -19,6 +26,26 @@ function ProductList() {
     const favItems = useSelector((state) => state.favItems.ids)
 
     const dispatch = useDispatch()
+
+    const navigation = useNavigation()
+
+    const { appTheme, toggleTheme } = useContext(ThemeContext);
+
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerRight: () => (
+                <Pressable onPress={() => {
+                    toggleTheme()
+                }}>
+                    <MaterialIcons name={'dark-mode'} color={appTheme === lightTheme ? "#000000" : "#ffffff"} size={30} />
+                </Pressable>
+            ),
+            headerStyle: {
+                backgroundColor: appTheme.backgroundColor
+            },
+            headerTintColor: appTheme === lightTheme ? '#000000' : '#FFFFFF', // Change the title color based on the theme
+        });
+    }, [navigation, appTheme]);
 
     useEffect(() => {
         let response = null;
@@ -41,7 +68,7 @@ function ProductList() {
             ...item,
             rate: item.rating ? item.rating.rate : item.rate
         };
-        return (<View style={styles.itemContainer}>
+        return (<View style={[styles.itemContainer, { backgroundColor: appTheme.backgroundColor }]}>
             <ProductInfoTile {...newItem} onFavPress={addToFavProducts} onAddToCartPress={addProductToCart} />
         </View>)
     }

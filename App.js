@@ -21,6 +21,7 @@ import Badge from './components/ui/Badge';
 import { createStackNavigator } from '@react-navigation/stack';
 import ProductDetails from './screens/ProductDetails';
 import { init } from './utils/database';
+import { ThemeProvider } from './theme/ThemeContext';
 
 const Stack = createStackNavigator()
 
@@ -114,14 +115,16 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name='ProductsTab' component={BottomBar} options={{
-            headerShown: false
-          }} />
-          <Stack.Screen name="ProductDetails" component={ProductDetails} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <ThemeProvider>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen name='ProductsTab' component={BottomBar} options={{
+              headerShown: false
+            }} />
+            <Stack.Screen name="ProductDetails" component={ProductDetails} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </ThemeProvider>
     </Provider>
   );
 }
