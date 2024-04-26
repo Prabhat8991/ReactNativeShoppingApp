@@ -46,8 +46,12 @@ function FavouriteProductsScreen() {
 
     //onFavPress={addToFavProducts}
     function ProductListItem({ item }) {
+        const newItem = {
+            ...item,
+            rate: item.rating ? item.rating.rate : item.rate
+        };
         return (<View style={styles.itemContainer}>
-            <ProductInfoTile {...item} onFavPress={removeFromFavorite} onAddToCartPress={addProductToCart} />
+            <ProductInfoTile {...newItem} onFavPress={removeFromFavorite} onAddToCartPress={addProductToCart} />
         </View>)
     }
 
