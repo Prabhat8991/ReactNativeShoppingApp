@@ -5,8 +5,9 @@ import AddRemoveButton from "./AddRemoveButton"
 import { Colors } from "../../colors/colors"
 
 function CartItem({ id, image, price, title, quantity, onItemAdded, onItemRemoved }) {
+
     return (
-        <View style={styles.cartItemContainer}>
+        <View style={[styles.cartItemContainer]}>
             <ProductImageContainer id={id} image={image} productImageType={PRODUCT_IMAGE_TYPE.CART_ITEM} style={{
                 marginHorizontal: 20
             }} />
@@ -36,6 +37,8 @@ const styles = StyleSheet.create({
         paddingVertical: 15,
         marginHorizontal: 20,
         marginVertical: 20,
+        elevation: 10,
+        borderColor: Colors.primaryPurple
     },
     addRemoveContainer: {
         alignItems: 'center',

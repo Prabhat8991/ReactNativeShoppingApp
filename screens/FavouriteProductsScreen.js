@@ -8,6 +8,8 @@ import { addToFav, removeFromFav } from '../store/favproducts'
 import { useDispatch } from 'react-redux'
 import { addToCart, removeFromCart } from '../store/cartproducts'
 import { insertOrUpdateProduct, updateProductIsAddedToCart, updateProductIsFav } from '../utils/database'
+import { ThemeContext } from '../theme/ThemeContext'
+import { useContext } from 'react'
 
 
 function FavouriteProductsScreen() {
@@ -17,6 +19,9 @@ function FavouriteProductsScreen() {
     const favitems = useSelector((state) => state.favItems.ids)
 
     const cartItems = useSelector((state) => state.cartItems.items)
+
+    const { appTheme, toggleTheme } = useContext(ThemeContext);
+
 
 
     console.log("Fav items" + favitems)
@@ -66,7 +71,10 @@ function FavouriteProductsScreen() {
         }))
     }
 
-    return <View>
+    return <View style={{
+        flex: 1,
+        backgroundColor: appTheme.backgroundColor
+    }}>
         <FlatList keyExtractor={(item) => item.id} data={productList} numColumns={2} renderItem={({ item }) => <ProductListItem item={item} />} />
     </View>
 }

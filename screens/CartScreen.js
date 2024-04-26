@@ -8,7 +8,8 @@ import { addToFav, removeFromFav } from '../store/favproducts'
 import { useDispatch } from 'react-redux'
 import { addToCart, removeFromCart } from '../store/cartproducts'
 import CartItem from '../components/ui/CartItem'
-
+import { ThemeContext } from '../theme/ThemeContext'
+import { useContext } from 'react'
 
 function CartScreen() {
 
@@ -17,6 +18,9 @@ function CartScreen() {
     const allProducts = useSelector((state) => state.allItems.items)
 
     console.log('All Products  ... ' + allProducts[0].id)
+
+    const { appTheme, toggleTheme } = useContext(ThemeContext);
+
 
     let itemsWithDetails = [];
 
@@ -70,7 +74,10 @@ function CartScreen() {
         )
     }
 
-    return (<View>
+    return (<View style={{
+        flex: 1,
+        backgroundColor: appTheme.backgroundColor
+    }}>
         <FlatList keyExtractor={(item) => item.id} data={itemsWithDetails} numColumns={1} renderItem={({ item }) => <CartListItem item={item} />} />
     </View>
     )
