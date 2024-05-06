@@ -31,21 +31,21 @@ function ProductList() {
 
     const { appTheme, toggleTheme } = useContext(ThemeContext);
 
-    useLayoutEffect(() => {
-        navigation.setOptions({
-            headerRight: () => (
-                <Pressable onPress={() => {
-                    toggleTheme()
-                }}>
-                    <MaterialIcons name={'dark-mode'} color={appTheme === lightTheme ? "#000000" : "#ffffff"} size={30} />
-                </Pressable>
-            ),
-            headerStyle: {
-                backgroundColor: appTheme.backgroundColor
-            },
-            headerTintColor: appTheme === lightTheme ? '#000000' : '#FFFFFF', // Change the title color based on the theme
-        });
-    }, [navigation, appTheme]);
+    // useLayoutEffect(() => {
+    //     navigation.setOptions({
+    //         headerRight: () => (
+    //             <Pressable onPress={() => {
+    //                 toggleTheme()
+    //             }}>
+    //                 <MaterialIcons name={'dark-mode'} color={appTheme === lightTheme ? "#000000" : "#ffffff"} size={30} />
+    //             </Pressable>
+    //         ),
+    //         headerStyle: {
+    //             backgroundColor: appTheme.backgroundColor
+    //         },
+    //         headerTintColor: appTheme === lightTheme ? '#000000' : '#FFFFFF', // Change the title color based on the theme
+    //     });
+    // }, [navigation, appTheme]);
 
     useEffect(() => {
         let response = null;

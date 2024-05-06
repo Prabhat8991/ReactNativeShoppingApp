@@ -5,7 +5,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   View,
-  Text
+  Text,
+  Settings
 } from 'react-native';
 import { CurvedBottomBarExpo } from 'react-native-curved-bottom-bar';
 import { AntDesign } from '@expo/vector-icons';
@@ -22,8 +23,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 import ProductDetails from './screens/ProductDetails';
 import { init } from './utils/database';
 import { ThemeProvider } from './theme/ThemeContext';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import ProfileScreen from './screens/ProfileScreen';
+import SettingsScreen from './screens/SettingsScreen';
+
 
 const Stack = createStackNavigator()
+
+const Drawer = createDrawerNavigator()
 
 export default function App() {
 
@@ -97,37 +104,60 @@ export default function App() {
         <CurvedBottomBarExpo.Screen
           position="LEFT"
           name="Products"
+          options={{
+            headerShown: false
+          }}
           component={() => <ProductList />}
         />
         <CurvedBottomBarExpo.Screen
           name="FavouriteProducts"
+          options={{
+            headerShown: false
+          }}
           component={() => <FavouriteProductsScreen />}
           position="RIGHT"
         />
         <CurvedBottomBarExpo.Screen
           name="CartScreen"
+          options={{
+            headerShown: false
+          }}
           component={() => <CartScreen />}
         />
       </CurvedBottomBarExpo.Navigator>
     )
   }
 
+  function ProductsStack() {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen name='ProductsTab' component={BottomBar} options={{
+          headerShown: false
+        }} />
+        <Stack.Screen name="ProductDetails" component={ProductDetails} options={{
+          headerShown: false
+        }} />
+      </Stack.Navigator>
+    )
+  }
 
   return (
     <Provider store={store}>
       <ThemeProvider>
         <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen name='ProductsTab' component={BottomBar} options={{
-              headerShown: false
+          <Drawer.Navigator initialRouteName='Products'>
+            <Drawer.Screen name='ShoppingApp' component={ProductsStack} options={{
+              drawerLabel: 'Products'
             }} />
-            <Stack.Screen name="ProductDetails" component={ProductDetails} />
-          </Stack.Navigator>
+            <Drawer.Screen name='Profile' component={ProfileScreen} />
+            <Drawer.Screen name='Settings' component={SettingsScreen} />
+          </Drawer.Navigator>
         </NavigationContainer>
       </ThemeProvider>
     </Provider>
   );
 }
+
 
 export const styles = StyleSheet.create({
   badgeContainer: {
